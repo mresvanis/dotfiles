@@ -81,7 +81,7 @@ highlight link Flake8_PyFlake    WarningMsg
 let g:vim_markdown_folding_disabled = 1
 
 " fzf
-set rtp+=~/.fzf
+set rtp+=/usr/local/opt/fzf
 " Mapping selecting mappings
 nmap <Leader><tab> <plug>(fzf-maps-n)
 xmap <Leader><tab> <plug>(fzf-maps-x)
@@ -107,7 +107,8 @@ let g:easytags_async = 1
 
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeDirArrows=0
+let g:NERDTreeDirArrowExpandable='+'
+let g:NERDTreeDirArrowCollapsible='~'
 "autocmd BufEnter * lcd %:p:h
 
 " Gitgutter

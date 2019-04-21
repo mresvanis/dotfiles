@@ -13,19 +13,12 @@ set -o pipefail
 # set -o xtrace, trace what gets executed
 [[ "${TRACE:-}" ]] && set -x
 
-
 main () {
   dir=$(pwd)
 
   # bash
-  ln -fs $dir/bash/bashrc ~/.bashrc
   ln -fs $dir/bash/bash_profile ~/.bash_profile
   ln -fs $dir/bash/bash_aliases ~/.bash_aliases
-
-  # xmonad
-  ln -fs $dir/xmonad/xmonad.hs ~/.xmonad/xmonad.hs
-  ln -fs $dir/xmonad/xmobar-volume ~/.xmonad/xmobar-volume
-  ln -fs $dir/xmonad/stalonetrayrc-single ~/.xmonad/stalonetrayrc-single
 
   # git
   ln -fs $dir/git/gitconfig ~/.gitconfig
@@ -38,9 +31,9 @@ main () {
   ln -fs $dir/tmux/tmux.conf ~/.tmux.conf
   ln -fs $dir/tmux/tmuxline.conf ~/.tmuxline.conf
 
-  # urxvt
-  ln -fs $dir/Xdefaults ~/.Xdefaults
-  ln -fs $dir/xsession ~/.xsession
+  # chunkwm & skhd
+  ln -fs $dir/chunkwmrc ~/.chunkwmrc
+  ln -fs $dir/skhdrc ~/.skhdrc
 
   ln -fs $dir/curlrc ~/.curlrc
   ln -fs $dir/tigrc ~/.tigrc
