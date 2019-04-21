@@ -26,6 +26,7 @@ main () {
   ln -fs $dir/xmonad/xmonad.hs ~/.xmonad/xmonad.hs
   ln -fs $dir/xmonad/xmobar-volume ~/.xmonad/xmobar-volume
   ln -fs $dir/xmonad/stalonetrayrc-single ~/.xmonad/stalonetrayrc-single
+  ln -fs $dir/xmonad/xmobarrc ~/.xmobarrc
 
   # git
   ln -fs $dir/git/gitconfig ~/.gitconfig
@@ -40,7 +41,7 @@ main () {
 
   # urxvt
   ln -fs $dir/Xdefaults ~/.Xdefaults
-  ln -fs $dir/xsession ~/.xsession
+  ln -fs $dir/xsession ~/.xinitrc
 
   ln -fs $dir/curlrc ~/.curlrc
   ln -fs $dir/tigrc ~/.tigrc
