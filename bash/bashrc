@@ -103,6 +103,7 @@ fi
 
 # fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 
 # Go
 export GOROOT=/usr/local/go

@@ -1,16 +1,20 @@
-#### My debian dev essentials
+# My debian dev essentials
 
-* urxvt
-* xmonad
-* xmobar
-* dmenu
-* stalonetray
-* vim
-* git
-* tmux
-* tig
+The simple `setup` script below needs the following software. Almost all of the latter are available as debian packages
 
-#### Setup
+* [urxvt](https://wiki.archlinux.org/index.php/rxvt-unicode)
+* [xmonad](https://xmonad.org/)
+* [xmobar](http://hackage.haskell.org/package/xmobar)
+* [dmenu](https://wiki.archlinux.org/index.php/Dmenu)
+* [stalonetray](https://wiki.archlinux.org/index.php/Stalonetray)
+* [git](https://git-scm.com/)
+* [vim](https://github.com/vim/vim)
+* [tmux](https://github.com/tmux/tmux)
+* [tig](https://github.com/jonas/tig)
+* [fzf](https://github.com/junegunn/fzf)
+* [ripgrep](https://github.com/BurntSushi/ripgrep)
+
+## Setup
 
 Clone the repo:
 
@@ -24,7 +28,7 @@ Link the respective rcs and dirs to your home by running the `setup` script:
 cd ~/.dotfiles && ./setup
 ```
 
-#### tmux
+## tmux
 
 Set the tmux plugin manager:
 
