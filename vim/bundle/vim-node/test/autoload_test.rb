@@ -26,7 +26,7 @@ describe "Autoloaded" do
       $vim.echo(%(maparg("<Plug>NodeGotoFile", "n"))).wont_equal ""
     end
 
-    it "must not be available in non-JavaScript files" do
+    it "must not be mapped in non-JavaScript files" do
       $vim.edit File.join(@dir, "README")
       $vim.echo(%(hasmapto("<Plug>NodeGotoFile"))).must_equal "0"
     end
@@ -71,19 +71,19 @@ describe "Autoloaded" do
       bufname.must_equal File.join(@dir, "lib", "README.txt")
     end
 
-    it "must open ./other.js relative to file" do
-      touch File.join(@dir, "foo", "index.js"), %(require("./other")) 
+    it "must edit ./other.js relative to file" do
+      touch File.join(@dir, "foo", "index.js"), %(require("./other"))
       touch File.join(@dir, "foo", "other.js")
- 
+
       $vim.edit File.join(@dir, "foo", "index.js")
       $vim.feedkeys "f.gf"
- 
+
       bufname = File.realpath($vim.echo(%(bufname("%"))))
       bufname.must_equal File.join(@dir, "foo", "other.js")
     end
 
     it "must edit ./index.js given ." do
-      touch File.join(@dir, "other.js"), %(require(".")) 
+      touch File.join(@dir, "other.js"), %(require("."))
       touch File.join(@dir, "index.js")
 
       $vim.edit File.join(@dir, "other.js")
@@ -94,7 +94,7 @@ describe "Autoloaded" do
     end
 
     it "must edit ./index.js given ./" do
-      touch File.join(@dir, "other.js"), %(require("./")) 
+      touch File.join(@dir, "other.js"), %(require("./"))
       touch File.join(@dir, "index.js")
 
       $vim.edit File.join(@dir, "other.js")
@@ -105,7 +105,7 @@ describe "Autoloaded" do
     end
 
     it "must edit ../index.js given .." do
-      touch File.join(@dir, "foo", "other.js"), %(require("..")) 
+      touch File.join(@dir, "foo", "other.js"), %(require(".."))
       touch File.join(@dir, "index.js")
 
       $vim.edit File.join(@dir, "foo", "other.js")
@@ -116,7 +116,7 @@ describe "Autoloaded" do
     end
 
     it "must edit ../index.js given ../" do
-      touch File.join(@dir, "foo", "other.js"), %(require("../")) 
+      touch File.join(@dir, "foo", "other.js"), %(require("../"))
       touch File.join(@dir, "index.js")
 
       $vim.edit File.join(@dir, "foo", "other.js")
@@ -126,17 +126,49 @@ describe "Autoloaded" do
       bufname.must_equal File.join(@dir, "index.js")
     end
 
-    it "must open ./node_modules/foo/index.js given foo" do
-      touch File.join(@dir, "index.js"), %(require("foo")) 
-      index = File.join(@dir, "node_modules", "foo", "index.js")
-      touch index
- 
+    it "must edit ./node_modules/foo/index.js given foo" do
+      touch File.join(@dir, "index.js"), %(require("foo"))
+      target = touch File.join(@dir, "node_modules", "foo", "index.js")
+
       $vim.edit File.join(@dir, "index.js")
       $vim.feedkeys "$hhgf"
-      $vim.echo(%(bufname("%"))).must_equal index
+      $vim.echo(%(bufname("%"))).must_equal target
     end
 
-    it "must not show an error when opening nothing" do
+    it "must edit ./node_modules/@scope/foo/index.js given @scope/foo" do
+      touch File.join(@dir, "index.js"), %(require("@scope/foo"))
+      target = File.join(@dir, "node_modules", "@scope", "foo", "index.js")
+      touch target
+
+      $vim.edit File.join(@dir, "index.js")
+      $vim.feedkeys "$hhgf"
+      $vim.echo(%(bufname("%"))).must_equal target
+    end
+
+    it "must edit ./foo.js given root/foo with root as symlink" do
+      touch File.join(@dir, "index.js"), %(require("root/foo"))
+      target = touch File.join(@dir, "foo.js")
+      FileUtils.mkpath File.join(@dir, "node_modules")
+      File.symlink "..", File.join(@dir, "node_modules", "root")
+
+      $vim.edit File.join(@dir, "index.js")
+      $vim.feedkeys "$hhgf"
+      $vim.echo(%(bufname("%"))).must_equal target
+    end
+
+    it "must relativize paths" do
+      touch File.join(@dir, "index.js"), %(require("root/foo"))
+      target = touch File.join(@dir, "foo.js")
+      FileUtils.mkpath File.join(@dir, "node_modules")
+      File.symlink "..", File.join(@dir, "node_modules", "root")
+
+      $vim.edit File.join(@dir, "index.js")
+      $vim.command %(:cd %:h)
+      $vim.feedkeys "$hhgf"
+      $vim.echo(%(bufname("%"))).must_equal File.basename(target)
+    end
+
+    it "must not show an error when searching for nothing" do
       touch File.join(@dir, "index.js"), %("")
 
       $vim.edit File.join(@dir, "index.js")
@@ -147,7 +179,7 @@ describe "Autoloaded" do
       error.must_equal ""
     end
 
-    it "must show error when opening a non-existent file" do
+    it "must show error when searching for a non-existent file" do
       touch File.join(@dir, "index.js"), %(require("new"))
 
       $vim.edit File.join(@dir, "index.js")
@@ -158,25 +190,97 @@ describe "Autoloaded" do
       error.must_equal %(E447: Can't find file "new" in path)
     end
 
-    it "must find also when filetype is JSON" do
+    it "must find when filetype is JavaScript and file exists" do
+      target = touch File.join(@dir, "node_modules", "foo", "index.js")
+
+      touch File.join(@dir, "index.js"), %(require("foo"))
+      $vim.edit File.join(@dir, "index.js")
+      $vim.feedkeys "$hhgf"
+      $vim.echo(%(bufname("%"))).must_equal target
+    end
+
+    it "must find when filetype is JavaScript and file new" do
+      target = touch File.join(@dir, "node_modules", "foo", "index.js")
+
+      $vim.edit File.join(@dir, "index.js")
+      $vim.insert %(require("foo"))
+      $vim.normal
+      $vim.feedkeys "$hhgf"
+      $vim.echo(%(bufname("%"))).must_equal target
+    end
+
+    it "must find when filetype is JSON" do
+      target = touch File.join(@dir, "node_modules", "foo", "index.js")
+
+      # NOTE: Use an extensionless file and set ft manually to not have
+      # filetype.vim set its filetype to JavaScript automatically.
       $vim.command("au BufReadPre package set ft=json")
       touch File.join(@dir, "package"), %({"dependencies": {"foo": "1.x"}})
-      index = File.join(@dir, "node_modules", "foo", "index.js")
-      touch index
-
       $vim.edit File.join(@dir, "package")
       $vim.echo("&filetype").must_equal "json"
-      $vim.command("au! BufReadPre package set ft=json")
 
       $vim.feedkeys "/foo\\<CR>gf"
       bufname = File.realpath($vim.echo(%(bufname("%"))))
-      bufname.must_equal index
+      bufname.must_equal target
+    end
+
+    it "must find when filetype set to JavaScript after open" do
+      target = touch File.join(@dir, "node_modules", "foo", "index.js")
+
+      touch File.join(@dir, "index.react"), %(require("foo"))
+      $vim.edit File.join(@dir, "index.react")
+      $vim.echo("&filetype").must_equal ""
+      $vim.command("setfiletype javascript")
+      $vim.echo("&filetype").must_equal "javascript"
+
+      $vim.feedkeys "$hhgf"
+      $vim.echo(%(bufname("%"))).must_equal target
+    end
+
+    it "must find when filetype set to JSX after open" do
+      target = touch File.join(@dir, "node_modules", "foo", "index.js")
+
+      touch File.join(@dir, "index.react"), %(require("foo"))
+      $vim.edit File.join(@dir, "index.react")
+      $vim.echo("&filetype").must_equal ""
+      $vim.command("setfiletype jsx")
+      $vim.echo("&filetype").must_equal "jsx"
+
+      $vim.feedkeys "$hhgf"
+      $vim.echo(%(bufname("%"))).must_equal target
+    end
+
+    it "must find when filetype set to JavaScript and Foo after open" do
+      target = touch File.join(@dir, "node_modules", "foo", "index.js")
+
+      touch File.join(@dir, "index.react"), %(require("foo"))
+      $vim.edit File.join(@dir, "index.react")
+      $vim.echo("&filetype").must_equal ""
+      $vim.command("setfiletype javascript.foo")
+      $vim.echo("&filetype").must_equal "javascript.foo"
+
+      $vim.feedkeys "$hhgf"
+      $vim.echo(%(bufname("%"))).must_equal target
+    end
+
+    # Ensure the autocommand detects both orderings.
+    it "must find when filetype set to Foo and JavaScript after open" do
+      target = touch File.join(@dir, "node_modules", "foo", "index.js")
+
+      touch File.join(@dir, "index.react"), %(require("foo"))
+      $vim.edit File.join(@dir, "index.react")
+      $vim.echo("&filetype").must_equal ""
+      $vim.command("setfiletype foo.javascript")
+      $vim.echo("&filetype").must_equal "foo.javascript"
+
+      $vim.feedkeys "$hhgf"
+      $vim.echo(%(bufname("%"))).must_equal target
     end
   end
 
   describe "Goto file with split" do
     it "must edit file in a new split" do
-      touch File.join(@dir, "index.js"), %(require("./other")) 
+      touch File.join(@dir, "index.js"), %(require("./other"))
       touch File.join(@dir, "other.js")
 
       $vim.edit File.join(@dir, "index.js")
@@ -190,7 +294,7 @@ describe "Autoloaded" do
 
   describe "Goto file with tab" do
     it "must edit file in a new tab" do
-      touch File.join(@dir, "index.js"), %(require("./other")) 
+      touch File.join(@dir, "index.js"), %(require("./other"))
       touch File.join(@dir, "other.js")
 
       $vim.edit File.join(@dir, "index.js")
@@ -318,12 +422,10 @@ describe "Autoloaded" do
     end
 
     it "must edit /node_modules/foo/index.js given foo" do
-      index = File.join(@dir, "node_modules", "foo", "index.js")
-      touch index
-
+      target = touch File.join(@dir, "node_modules", "foo", "index.js")
       $vim.edit File.join(@dir, "README.txt")
       $vim.command("Nedit foo")
-      $vim.echo(%(bufname("%"))).must_equal index
+      $vim.echo(%(bufname("%"))).must_equal target
     end
 
     describe "completion" do
@@ -443,8 +545,7 @@ describe "Autoloaded" do
 
     it "must edit and lcd to module's root directory" do
       touch File.join(@dir, "node_modules", "foo", "package.json")
-      utils = File.join(@dir, "node_modules", "foo", "lib", "utils.js")
-      touch utils
+      touch File.join(@dir, "node_modules", "foo", "lib", "utils.js")
 
       $vim.edit File.join(@dir, "README.txt")
       $vim.command("vsplit")

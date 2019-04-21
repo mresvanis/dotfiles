@@ -1,3 +1,24 @@
+## Unreleased
+- Fixes `gf` on scoped modules (`require("@scope/example")`).
+- Initializes Node.vim `gf` and other mappings when the `'filetype'` is set,
+  rather than when reading a file.  
+  This allows you to manually set the filetype to JavaScript after opening
+  a file, for example, and still get Node.vim's mappings.
+- Initializes Node.vim mappings for JSX (those with the `jsx` filetype) files.
+- Adds `.es` to detected suffixes, so you can `gf` over `./foo` to open
+  `./foo.es`.
+- Updates URLs to use <https://github.com/nodejs/node> instead of the previous
+  Joyent repo.  
+  Thanks, [Jacky Alciné](https://jacky.wtf), for the help!
+- Resolves symlinks in paths before editing a file.  
+  Shows correct paths when using the relative symlink trick in `node_modules` (`ln -s .. node_modules/root`) and using `gf` on `require("root/lib/foo")`.
+- Uses the HTTPS variant of <https://rawgit.com> to download Node core module source files.  
+  This previously used HTTP because my Vim v7's Netrw didn't seem to handle HTTPS URLs. If that's still the case for you, set `g:node_repository_url`:
+
+  ```vim
+  let node_repository_url = "http://raw.githack.com/nodejs/node"
+  ```
+
 ## 0.8.1 (Apr 15, 2014)
 - Updates the URL from which Node.vim downloads Node core module source files.  
   Uses <http://rawgit.com> which used to be named <http://rawgithub.com>.  

@@ -27,14 +27,14 @@ tag:
 	git tag "v$(VERSION)"
 
 node.tar.gz:
-	wget -c "https://github.com/joyent/node/archive/master.tar.gz" -O node.tar.gz
+	wget -c "https://github.com/nodejs/node/archive/master.tar.gz" -O node.tar.gz
 
 list-core-modules: node.tar.gz
 	tar tf node.tar.gz |\
 	egrep "^node[^/]*/lib/.+" |\
 	xargs -n1 basename -s .js |\
 	{ cat; echo node; } | sort
-	
+
 .PHONY: love
 .PHONY: spec autospec
 .PHONY: pack publish tag
