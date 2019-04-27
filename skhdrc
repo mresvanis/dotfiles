@@ -72,15 +72,15 @@ shift + alt + ctrl - z  : chunkc tiling::window --send-to-monitor prev; chunkc t
 shift + alt + ctrl - c  : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
 
 # Resize
-cmd + shift - left 	: chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
-cmd + shift - down 	: chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge south
-cmd + shift - up 	: chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
-cmd + shift - right : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge east
+alt + shift - left 	: chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
+alt + shift - down 	: chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge south
+alt + shift - up 	: chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
+alt + shift - right : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge east
 
-lcmd + shift - right : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
-lcmd + shift - down	 : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
-lcmd + shift - up 	 : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
-lcmd + shift - left  : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
+ralt + shift - right : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
+ralt + shift - down	 : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
+ralt + shift - up 	 : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
+ralt + shift - left  : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
 
 # .blacklist [
 #   "iTerm2"
