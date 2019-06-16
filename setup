@@ -13,7 +13,6 @@ set -o pipefail
 # set -o xtrace, trace what gets executed
 [[ "${TRACE:-}" ]] && set -x
 
-
 main () {
   dir=$(pwd)
 
@@ -46,6 +45,12 @@ main () {
 
   ln -fs $dir/curlrc ~/.curlrc
   ln -fs $dir/tigrc ~/.tigrc
+
+  # screens - tv
+  for script in set_screens unset_screens set_tv unset_tv
+  do
+    sudo ln -fs $dir/scripts/${script} /usr/local/bin/${script}
+  done
 
   trap - EXIT
 }
