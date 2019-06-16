@@ -1,44 +1,47 @@
-Config { font = "xft:Fira Code Retina-12:bold"
-       , additionalFonts = ["xft:FontAwesome:size=10"]
-       , bgColor = "black"
-       , fgColor = "grey"
-       , position = TopW L 92
-       , lowerOnStart = True
-       , commands = [
-										Run DynNetwork [ "--template" , "<dev> <tx>/<rx>kB/s"
-                         , "--Low"      , "1000"       -- units: kB/s
-                         , "--High"     , "5000"       -- units: kB/s
-                         , "--low"      , "white"
-                         , "--normal"   , "#005b96"
-                         , "--high"     , "#854442"
-                      ] 10
-                    , Run MultiCpu [
-                        "--template", "<fn=1>\xf109</fn> <total>%",
-                        "--Low", "50",         -- units: %
-                        "--High", "85",        -- units: %
-                        "--low", "#7bc043",
-                        "--normal", "#005b96",
-                        "--high", "#854442"
-                      ] 10
-                    , Run Memory ["-t","<used> MB"] 10
-    		            , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
-                    , Run Kbd [("us/altgr-intl", "US"), ("gr/extended", "GR")]
-                    , Run Battery [
-                        "-t", "<acstatus> <left>%",
-                        "--Low", "15",
-                        "--High", "50",
-                        "-h", "#7bc043",
-                        "-l", "#db0000",
-                        "-n", "#ff6700",
-                        "--",
-                        "-O", "<fn=1>\xf1e6</fn>",
-                        "-o", "<fn=1>\xf241</fn>",
-                        "-i", "<fn=1>\xf240</fn>"
-                      ] 100
-                    -- , Run Com "/bin/bash" [".xmonad/xmobar-volume"] "vol" 10
-                    , Run StdinReader
-                    ]
-       , sepChar = "%"
-       , alignSep = "}{"
-       , template = "%StdinReader% }{ %multicpu% | %memory% | %dynnetwork% | %kbd% | %battery% | <fc=#4B86B4>%date%</fc>"
-       }
+Config {
+    font = "xft:Fira Code Retina-12:bold"
+  , additionalFonts = ["xft:FontAwesome:size=10"]
+  , bgColor = "black"
+  , fgColor = "grey"
+  , position = TopW L 92
+  , lowerOnStart = True
+  , overrideRedirect = False
+  , allDesktops = False
+  , commands = [
+              Run DynNetwork [ "--template" , "<dev> <tx>/<rx>kB/s"
+                   , "--Low"      , "1000"       -- units: kB/s
+                   , "--High"     , "5000"       -- units: kB/s
+                   , "--low"      , "white"
+                   , "--normal"   , "#005b96"
+                   , "--high"     , "#854442"
+                ] 10
+              , Run MultiCpu [
+                  "--template", "<fn=1>\xf109</fn> <total>%",
+                  "--Low", "50",         -- units: %
+                  "--High", "85",        -- units: %
+                  "--low", "#7bc043",
+                  "--normal", "#005b96",
+                  "--high", "#854442"
+                ] 10
+              , Run Memory ["-t","<used> MB"] 10
+              , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+              , Run Kbd [("us/altgr-intl", "US"), ("gr/extended", "GR")]
+              , Run Battery [
+                  "-t", "<acstatus> <left>%",
+                  "--Low", "15",
+                  "--High", "50",
+                  "-h", "#7bc043",
+                  "-l", "#db0000",
+                  "-n", "#ff6700",
+                  "--",
+                  "-O", "<fn=1>\xf1e6</fn>",
+                  "-o", "<fn=1>\xf241</fn>",
+                  "-i", "<fn=1>\xf240</fn>"
+                ] 100
+              -- , Run Com "/bin/bash" [".xmonad/xmobar-volume"] "vol" 10
+              , Run StdinReader
+              ]
+  , sepChar = "%"
+  , alignSep = "}{"
+  , template = "%StdinReader% }{ %multicpu% | %memory% | %dynnetwork% | %kbd% | %battery% | <fc=#4B86B4>%date%</fc>"
+}
