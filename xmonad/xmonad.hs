@@ -282,18 +282,18 @@ myStartupHook = return ()
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-	xmproc <- spawnPipe "xmobar ~/.xmobarrc"
-	xmonad $ defaults {
-		logHook = dynamicLogWithPP $ xmobarPP {
-      ppOutput = hPutStrLn xmproc
-      , ppTitle = xmobarColor "#b3cde0" "" . shorten 80
-      , ppCurrent = xmobarColor "#CEFFAC" ""
-      , ppSep = "   "
+    xmproc <- spawnPipe "xmobar -x 0 ~/.xmobarrc"
+    xmonad $ defaults {
+      logHook = dynamicLogWithPP $ xmobarPP {
+        ppOutput = hPutStrLn xmproc
+        , ppTitle = xmobarColor "#b3cde0" "" . shorten 80
+        , ppCurrent = xmobarColor "#CEFFAC" ""
+        , ppSep = "   "
+      }
+      , manageHook = manageDocks <+> myManageHook
+      , startupHook = setWMName "LG3D"
+      , handleEventHook = docksEventHook
     }
-		, manageHook = manageDocks <+> myManageHook
-		, startupHook = setWMName "LG3D"
-		, handleEventHook = docksEventHook
-	}
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
