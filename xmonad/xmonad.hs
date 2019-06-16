@@ -101,9 +101,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- Spawn scratchpad
     , ((modMask, xK_s), scratchpadSpawnActionTerminal myTerminal)
 
-    -- toggle the status bar gap
-    -- TODO, update this binding with avoidStruts , ((modMask, xK_b),
-
     -- Open the file explorer
     , ((mod4Mask .|. shiftMask, xK_o),  spawn "pcmanfm")
 
