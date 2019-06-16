@@ -26,6 +26,7 @@ main () {
   ln -fs $dir/xmonad/xmonad.hs ~/.xmonad/xmonad.hs
   ln -fs $dir/xmonad/xmobar-volume ~/.xmonad/xmobar-volume
   ln -fs $dir/xmonad/stalonetrayrc-single ~/.xmonad/stalonetrayrc-single
+  ln -fs $dir/xmonad/stalonetrayrc-dual ~/.xmonad/stalonetrayrc-dual
   ln -fs $dir/xmonad/xmobarrc ~/.xmobarrc
 
   # git

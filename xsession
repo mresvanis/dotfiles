@@ -6,7 +6,7 @@ xrdb -merge ~/.Xresources &
 setxkbmap us,el -option "grp:alt_shift_toggle" &
 
 xrandr --output eDP1 --primary --mode 1920x1080 &
-# xrandr --auto --output HDMI1 --mode 1920x1080 --left-of VGA1 --primary --output VGA1 --mode 1920x1080 &
+# xrandr --auto --output HDMI1 --mode 2560x1440 --right-of eDPI --primary --output eDPI --mode 1920x1080 &
 
 feh --bg-scale ~/Downloads/abstract_circles.jpg
 

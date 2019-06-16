@@ -1,0 +1,19 @@
+# 1 row of 12 icons, each 23px wide/tall.
+# This icon size aligns with the size of xmobar with font "xft:monospace-8"
+# Resolution of each display is 2560x1440.
+# Combined width of both displays is 2560 * 2 = 5120.
+# position = combined_width - (num_icons * icon_size)
+# position = 5120 - (12 * 23) = 4844
+# Example: geometry 12x1+4844
+geometry 8x1+4322
+#window_strut auto
+#skip_taskbar 1
+#icon_gravity NE
+
+icon_size 20
+sticky true
+window_type dock
+dockapp_mode wmaker
+skip_taskbar true
+icon_gravity NW
+background black

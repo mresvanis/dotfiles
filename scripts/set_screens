@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
+
 #xrandr --auto --output DP1 --mode 1920x1200 --left-of eDP1 --primary
-xrandr --auto --output DP1 --mode 1920x1080 --right-of eDP1 --primary
-xrandr --auto --output eDP1 --left-of DP1
-kill $(pgrep trayer)
-~/.bin/tray &
-feh --bg-fill ~/Downloads/wallpapers/a_kombi_bus-wallpaper-1920x1080.jpg
+xrandr --auto --output HDMI1 --mode 2560x1440 --right-of eDP1 --primary
+xrandr --auto --output eDP1 --left-of HDMI1
+
+kill $(pgrep stalonetray)
+stalonetray -c ~/.xmonad/stalonetrayrc-dual &
+
+feh --bg-scale ~/Downloads/abstract_circles.jpg
