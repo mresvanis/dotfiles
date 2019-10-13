@@ -1,5 +1,5 @@
 Config {
-    font = "xft:Fira Code Retina-12:bold"
+    font = "xft:Fira Code Sans-12:bold"
   , additionalFonts = ["xft:FontAwesome:size=10"]
   , bgColor = "black"
   , fgColor = "grey"
