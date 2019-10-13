@@ -25,8 +25,8 @@ alias ...='cd ../../'
 
 alias vimod='vim -p $(git diff --name-only | uniq)'
 
-alias dc='docker-compose'
-alias de='docker exec -it'
+alias dc='sudo docker-compose'
+alias de='sudo docker exec -it'
 
 alias vpn_am='sudo openvpn --config /etc/openvpn/ipvanish-NL-Amsterdam-ams-a18.ovpn --auth-user-pass /etc/openvpn/login.txt'
 alias vpn_sg='sudo openvpn --config /etc/openvpn/ipvanish-SG-Singapore-sin-a09.ovpn --auth-user-pass /etc/openvpn/login.txt'
