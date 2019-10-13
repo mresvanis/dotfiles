@@ -19,5 +19,6 @@ xscreensaver -nosplash &
 # ~/.dropbox-dist/dropboxd &
 
 pnmixer &
+blueman-manager &
 
 exec ck-launch-session dbus-launch --sh-syntax --exit-with-session ~/.cabal/bin/xmonad
