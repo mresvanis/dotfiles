@@ -9,31 +9,27 @@
 [color]
   ui = true
 [color "branch"]
-    current = red reverse
-    local = blue
-    remote = green
+  current = red reverse
+  local = blue
+  remote = green
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+  added = yellow
+  changed = green
+  untracked = cyan
 [color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
 [color "grep"]
   linenumber = green
   match = red
   filename = magenta
 [push]
-    default = current
-
+  default = current
 [alias]
-
-# list aliases
   la = "!git config -l | grep alias | cut -c 7-"
 
-# stathopa aliases
 	tip = log -1
 	amend = commit --amend --no-edit
 	pr = pull --rebase
@@ -45,7 +41,6 @@
   skip = rebase --skip
   fix = commit --fixup
 
-# mine
   ci = commit
   cl = clone
   cp = cherry-pick
@@ -55,17 +50,14 @@
   br = branch
   bra = branch -av
 
-# reset aliases
   rh = reset --hard HEAD
 
-# stash aliases
   sl = stash list
   sa = stash apply
   ss = stash save
   sp = stash pop
 
-# log listing aliases
-  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s\\ %Cgreen(%cr)%Cblue\\ [%cn]" --date=relative --decorate
+  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s\\ %Cgreen(%cr)%Cblue\\ [%cn]" --date=default --decorate
   ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
   lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
   ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=default
@@ -75,11 +67,9 @@
   who = shortlog -s --
   fl = log -u
 
-# merging aliases
   cours = "!f() { git co --ours $@ && git add $@; }; f"
   ctheirs = "!f() { git co --theirs $@ && git add $@; }; f"
 
-# file, commit changes aliases
   dl = "!git ll -1"
   dlc = diff --cached HEAD^
   dfc = diff --cached
@@ -87,8 +77,4 @@
   changes=diff --name-status -r
   diffstat=diff --stat -r
 
-# grep
   ggrep = "grep --break --heading --line-number"
-
-[credential]
-  helper = osxkeychain
