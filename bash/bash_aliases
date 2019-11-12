@@ -23,5 +23,8 @@ alias vimod='vim -p $(git diff --name-only | uniq)'
 alias dc='docker-compose'
 alias de='docker exec -it'
 
+alias dclean='docker rm $(docker ps --filter=status=exited --filter=status=created -q)'
+alias dcleani='docker rmi $(docker images -a --filter=dangling=true -q)'
+
 alias tlisten='sudo lsof -iTCP -sTCP:LISTEN -P -n'
 alias ulisten='sudo lsof -iUDP -P -n | egrep -v "(127|::1)"'
